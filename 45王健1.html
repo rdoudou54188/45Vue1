@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue2.6.10.js"></script>
+    <style>
+        #main{height: 500px;width: 1000px;margin: 0 auto}
+        #image{ height: 450px;width: 450px;float: left; margin: 10px 20px}
+        #right{ height: 450px; width: 450px;float: right; margin: 10px 20px}
+        #select{height: 50px; width: 450px;float: right; margin: 20px 0px; background-color:rgba(247,247,247,0.53)}
+        .choose{border: 1px solid red}
+    </style>
+</head>
+<body>
+<div id="main">
+    <div id="image">
+        <img style="width: 450px; height: 450px" :src="book[number].url">
+    </div>
+    <div id="right">
+        <div id="font">书籍选择</div>
+        <div id="select" v-for="(item,index) in book" :key="index" @click="Click(index)":class="{'choose':number==index}">
+            <img  :src="item.url" style="height: 50px;width: 50px; vertical-align: middle; margin-right: 50px">
+            <span style="vertical-align: middle">{{item.name}}</span>
+        </div>
+    </div>
+</div>
+
+<script>
+   new Vue({
+       el:"#main",
+       data(){
+         return{
+            book:[
+                {url:"img/shz.jpg",name:"水浒传"},
+                {url:"img/xyj.jpg",name:"西游记"},
+                {url:"img/sgyy.jpg",name:"三国演义"},
+                {url:"img/hlm.jpg",name:"红楼梦"}
+            ],
+             number:0,
+         }
+       },
+       methods:{
+          Click(index){
+             this.number=index;
+          }
+       }
+   })
+</script>
+</body>
+</html>

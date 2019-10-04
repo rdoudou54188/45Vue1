@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue2.6.10.js"></script>
+    <style>
+        #main{margin: 0 auto;}
+        th,td{border: 1px solid black}
+
+    </style>
+</head>
+<body>
+<table id="main" cellpadding="10" cellspacing="0">
+    <tr>
+        <td>商品序号</td>
+        <td>商品编号</td>
+        <td>商品名称</td>
+        <td>商品数量</td>
+        <td>商品单价</td>
+        <td>移除</td>
+    </tr>
+    <tr v-for="(item,index) in shop">
+        <td>{{index+1}}</td>
+        <td>{{item.identifir}}</td>
+        <td>{{item.name}}</td>
+        <td>
+            <button id="decrease" @click="dClick(index)">-</button>
+            <input type="text" style="width: 50px" v-model="item.number" >
+            <button id="add" @click="aClick(index)">+</button></td>
+        <td>{{item.price}}</td>
+        <td><button @click="del(index)">删除</button></td>
+
+    </tr>
+    <tr v-if="shop.length>0">
+        <td colspan="6">总价为:{{money}}</td>
+    </tr>
+    <tr v-else>
+        <td colspan="6"> 无</td>
+    </tr>
+</table>
+
+<script>
+    new Vue({
+        el:'#main',
+        data(){
+            return{
+                shop:[
+                    {identifir:"001",name:"水浒传",number:0,price:"100"},
+                    {identifir:"002",name:"三国演义",number:0,price:"101"},
+                    {identifir:"003",name:"西游记",number:0,price:"102"},
+                    {identifir:"004",name:"红楼梦",number:0,price:"103"},
+                ]
+            }
+        },
+
+        computed: {
+            money() {
+                var sum = 0;
+                this.shop.forEach(function (item) {
+                    sum += item.number * item.price;
+                })
+                return sum;
+            }
+        },
+
+
+        methods:{
+            dClick(index){
+                if (this.shop[index].number>0) {
+                   this.shop[index].number--;
+                     var money=this.shop[index].number*this.shop[index].price
+
+                }
+            },
+
+
+            aClick(index){
+                this.shop[index].number++;
+                var money=this.shop[index].number*this.shop[index].price
+            },
+
+            del(index) {
+                this.shop.splice(index, 1)
+            }
+        }
+    })
+</script>
+</body>
+</html>
